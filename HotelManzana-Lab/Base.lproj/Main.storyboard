@@ -204,7 +204,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="kxU-wi-Dey">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="done" id="OIe-wY-oJ2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="OIe-wY-oJ2">
                             <connections>
                                 <action selector="doneBarButtonTapped:" destination="gKx-rI-gob" id="bbj-i2-yfq"/>
                             </connections>

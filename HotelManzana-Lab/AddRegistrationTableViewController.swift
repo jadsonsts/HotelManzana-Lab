@@ -17,6 +17,25 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet weak var checkOutDateLabel: UILabel!
     @IBOutlet weak var checkOutDatePicker: UIDatePicker!
     
+    
+    //storing the index path for easy comparison in the delegate methods
+    let checkInDatePickerCellIndexPath = IndexPath(row: 1, section: 1)
+    let checkOutDatePickerCellIndexPath = IndexPath(row: 3, section: 1)
+    
+    
+    //store whether or not the date picker will be shown / show or hide them (not adjust the cell height / both start as not shown
+    var isCheckInDatePickerShown: Bool = false {
+        didSet {
+            checkInDatePicker.isHidden = !isCheckInDatePickerShown
+        }
+    }
+    
+    var isCheckOutDatePickerShown: Bool = false {
+        didSet {
+            checkOutDatePicker.isHidden = !isCheckOutDatePickerShown
+        }
+    }
+    
     func updateDateViews() {
         checkOutDatePicker.minimumDate = checkInDatePicker.date.addingTimeInterval(86400)
         
@@ -63,6 +82,59 @@ class AddRegistrationTableViewController: UITableViewController {
         print("checkOut: \(checkOutDate)")
     }
     
+
+    //MARK: - Delegate Methods
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //checking if the index path is equal to one of the pickers cells and if the date picker is displayed to set up its height to 216 points
+        
+        switch (indexPath.section, indexPath.row) {
+        case (checkInDatePickerCellIndexPath.section, checkInDatePickerCellIndexPath.row): if isCheckInDatePickerShown {
+            return 216.0
+        } else {
+            return 0.0
+        }
+        case (checkOutDatePickerCellIndexPath.section, checkOutDatePickerCellIndexPath.row): if isCheckOutDatePickerShown {
+            return 216.0
+        } else {
+            return 0.0
+        }
+        default:
+            return 44.0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // check which row is selected and if one of them is the check-in date, show the date picker.
+        
+        switch (indexPath.section, indexPath.row) {
+        case (checkInDatePickerCellIndexPath.section, checkInDatePickerCellIndexPath.row - 1): if isCheckInDatePickerShown {
+            isCheckInDatePickerShown = false
+        } else if isCheckOutDatePickerShown {
+            isCheckOutDatePickerShown = false
+            isCheckInDatePickerShown = true
+        } else {
+            isCheckInDatePickerShown = true
+        }
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            
+        case (checkOutDatePickerCellIndexPath.section, checkOutDatePickerCellIndexPath.row - 1): if isCheckOutDatePickerShown {
+            isCheckOutDatePickerShown = false
+        } else if isCheckInDatePickerShown {
+            isCheckInDatePickerShown = false
+            isCheckOutDatePickerShown = true
+        } else {
+            isCheckOutDatePickerShown = true
+        }
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            
+        default:
+            break
+            
+        }
+    }
 
     // MARK: - Table view data source
 

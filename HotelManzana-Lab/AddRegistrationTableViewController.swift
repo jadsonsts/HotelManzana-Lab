@@ -16,6 +16,11 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet weak var checkInDatePicker: UIDatePicker!
     @IBOutlet weak var checkOutDateLabel: UILabel!
     @IBOutlet weak var checkOutDatePicker: UIDatePicker!
+    @IBOutlet weak var numberOfAdultsLabel: UILabel!
+    @IBOutlet weak var numberOfAdultsStepper: UIStepper!
+    @IBOutlet weak var numberOfChildrenLabel: UILabel!
+    @IBOutlet weak var numberOfChildrenStepper: UIStepper!
+    @IBOutlet weak var wifiSwitch: UISwitch!
     
     
     //storing the index path for easy comparison in the delegate methods
@@ -45,11 +50,17 @@ class AddRegistrationTableViewController: UITableViewController {
         checkInDateLabel.text = dateFormater.string(from: checkInDatePicker.date)
         checkOutDateLabel.text = dateFormater.string(from: checkOutDatePicker.date)
     }
+    
+    func updateNumberOfGuests() {
+        numberOfAdultsLabel.text = "\(Int(numberOfAdultsStepper.value))"
+        numberOfChildrenLabel.text = "\(Int(numberOfChildrenStepper.value))"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         updateDateViews()
+        updateNumberOfGuests()
         
         let midnightToday = Calendar.current.startOfDay(for: Date())
         checkInDatePicker.minimumDate = midnightToday
@@ -66,6 +77,14 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
     }
+     
+    @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
+        
+    }
+    
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        updateNumberOfGuests()
+    }
     
     @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
         let firstName = firstNameTextField.text ?? ""
@@ -73,6 +92,9 @@ class AddRegistrationTableViewController: UITableViewController {
         let email = emailTextField.text ?? ""
         let checkInDate = checkInDatePicker.date
         let checkOutDate = checkOutDatePicker.date
+        let numberOfAdults = Int(numberOfAdultsStepper.value)
+        let numberOfChildren = Int(numberOfChildrenStepper.value)
+        let hasWifi = wifiSwitch.isOn
         
         print("DONE TAPPED")
         print("firstName: \(firstName)")
@@ -80,6 +102,10 @@ class AddRegistrationTableViewController: UITableViewController {
         print("email: \(email)")
         print("checkIn: \(checkInDate)")
         print("checkOut: \(checkOutDate)")
+        print("numberOfAdulsts: \(numberOfAdults)")
+        print("numberOfChildren: \(numberOfChildren)")
+        print("wifi: \(hasWifi)")
+        
     }
     
 
@@ -135,7 +161,6 @@ class AddRegistrationTableViewController: UITableViewController {
             
         }
     }
-
     // MARK: - Table view data source
 
 //    override func numberOfSections(in tableView: UITableView) -> Int {

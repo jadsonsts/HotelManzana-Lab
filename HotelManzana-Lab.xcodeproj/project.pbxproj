@@ -13,6 +13,9 @@
 		DF7D9B1B27D4BB970045D3FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF7D9B1A27D4BB970045D3FD /* Assets.xcassets */; };
 		DF7D9B1E27D4BB970045D3FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7D9B1C27D4BB970045D3FD /* LaunchScreen.storyboard */; };
 		DF7D9B2627D745C40045D3FD /* AddRegistrationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7D9B2527D745C40045D3FD /* AddRegistrationTableViewController.swift */; };
+		DF7D9B2827DF3E090045D3FD /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7D9B2727DF3E090045D3FD /* Registration.swift */; };
+		DF7D9B2A27DF3ECF0045D3FD /* RoomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7D9B2927DF3ECF0045D3FD /* RoomType.swift */; };
+		DF7D9B2C27DF40B70045D3FD /* SelectRoomTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7D9B2B27DF40B70045D3FD /* SelectRoomTypeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		DF7D9B1D27D4BB970045D3FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF7D9B1F27D4BB970045D3FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF7D9B2527D745C40045D3FD /* AddRegistrationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRegistrationTableViewController.swift; sourceTree = "<group>"; };
+		DF7D9B2727DF3E090045D3FD /* Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registration.swift; sourceTree = "<group>"; };
+		DF7D9B2927DF3ECF0045D3FD /* RoomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomType.swift; sourceTree = "<group>"; };
+		DF7D9B2B27DF40B70045D3FD /* SelectRoomTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRoomTypeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +64,10 @@
 			children = (
 				DF7D9B1127D4BB960045D3FD /* AppDelegate.swift */,
 				DF7D9B1327D4BB960045D3FD /* SceneDelegate.swift */,
+				DF7D9B2727DF3E090045D3FD /* Registration.swift */,
+				DF7D9B2927DF3ECF0045D3FD /* RoomType.swift */,
 				DF7D9B2527D745C40045D3FD /* AddRegistrationTableViewController.swift */,
+				DF7D9B2B27DF40B70045D3FD /* SelectRoomTypeTableViewController.swift */,
 				DF7D9B1727D4BB960045D3FD /* Main.storyboard */,
 				DF7D9B1A27D4BB970045D3FD /* Assets.xcassets */,
 				DF7D9B1C27D4BB970045D3FD /* LaunchScreen.storyboard */,
@@ -138,7 +147,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF7D9B2C27DF40B70045D3FD /* SelectRoomTypeTableViewController.swift in Sources */,
+				DF7D9B2827DF3E090045D3FD /* Registration.swift in Sources */,
 				DF7D9B2627D745C40045D3FD /* AddRegistrationTableViewController.swift in Sources */,
+				DF7D9B2A27DF3ECF0045D3FD /* RoomType.swift in Sources */,
 				DF7D9B1227D4BB960045D3FD /* AppDelegate.swift in Sources */,
 				DF7D9B1427D4BB960045D3FD /* SceneDelegate.swift in Sources */,
 			);

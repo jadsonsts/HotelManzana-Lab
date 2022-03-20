@@ -19,7 +19,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         let firstName = firstNameTextField.text ?? ""
         let lastName = lastNameTextField.text ?? ""
         let email = emailTextField.text ?? ""
-        let checkInDate = checkOutDatePicker.date
+        let checkInDate = checkInDatePicker.date
         let checkOutDate = checkOutDatePicker.date
         let numberOfAdults = Int(numberOfAdultsStepper.value)
         let numberOfChildren = Int(numberOfChildrenStepper.value)
@@ -98,12 +98,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateNumberOfGuests()
         updateRoomType()
         
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -124,7 +118,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
 
     
-    /* // ibaction to test all inputs b4 implementing the unwindSegue
+  /*   // ibaction to test all inputs b4 implementing the unwindSegue
     @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
         let firstName = firstNameTextField.text ?? ""
         let lastName = lastNameTextField.text ?? ""
@@ -146,9 +140,8 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         print("numberOfChildren: \(numberOfChildren)")
         print("wifi: \(hasWifi)")
         print("roomType: \(roomChoice)")
-
-    }
-    */
+    } */
+    
 
     
     func updateRoomType() {

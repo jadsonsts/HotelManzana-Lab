@@ -49,6 +49,14 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet weak var numberOfChildrenStepper: UIStepper!
     @IBOutlet weak var wifiSwitch: UISwitch!
     @IBOutlet weak var roomTypeLabel: UILabel!
+    @IBOutlet weak var numberOfNightsLabel: UILabel!
+    @IBOutlet weak var shortNameRoomLabel: UILabel!
+    @IBOutlet weak var totalCostRoomLabel: UILabel!
+    @IBOutlet weak var wifiYesNoLabel: UILabel!
+    @IBOutlet weak var wifiTotalCostLabel: UILabel!
+    @IBOutlet weak var totalCostLabel: UILabel!
+    
+    var wifiPrice = 0
     
     var roomType: RoomType?
     
@@ -89,7 +97,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        
         let midnightToday = Calendar.current.startOfDay(for: Date())
         checkInDatePicker.minimumDate = midnightToday
         checkInDatePicker.date = midnightToday
@@ -98,14 +105,54 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateNumberOfGuests()
         updateRoomType()
         
+        numberOfNightsLabel.text = " "
+        shortNameRoomLabel.text = " "
+        totalCostLabel.text = " "
+        totalCostRoomLabel.text = " "
+        
+    }
+    
+    
+    func updateCharges () {
+        if let diffInDays = Calendar.current.dateComponents([.day], from: checkInDatePicker.date, to: checkOutDatePicker.date).day {
+            numberOfNightsLabel.text = "\(diffInDays)"
+
+        if let shortName = registration?.roomType.shortName {
+            shortNameRoomLabel.text = shortName
+            let totalRoomCost = roomType!.price * (diffInDays)
+            totalCostRoomLabel.text = String("$ \(totalRoomCost)")
+        } else {
+            shortNameRoomLabel.text = " "
+        }
+        
+        if wifiSwitch.isOn {
+            wifiYesNoLabel.text = "Yes"
+            wifiPrice = 10
+            wifiTotalCostLabel.text = String ("$ \(diffInDays * (wifiPrice))")
+        } else {
+            wifiYesNoLabel.text = "No"
+            wifiPrice = 0
+            wifiTotalCostLabel.text = "$ 0"
+        }
+            
+            if roomTypeLabel.text == "Not Set" {
+                totalCostLabel.text = " "
+            } else {
+                let totalCost = (roomType!.price * diffInDays) + (diffInDays + (wifiPrice))
+                totalCostLabel.text = String(totalCost)
+            }
+        tableView.reloadData()
+        }
+            
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
+        updateCharges() //call here
     }
      
     @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
-        
+        updateCharges() //call here
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
@@ -147,6 +194,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     func updateRoomType() {
         if let roomType = roomType {
             roomTypeLabel.text = roomType.name
+            updateCharges() //call here
         } else {
             roomTypeLabel.text = "Not Set"
         }

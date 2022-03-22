@@ -58,23 +58,7 @@ class RegistrationTableViewController: UITableViewController {
         if let destinationVC = segue.destination as? DetailsRegistrationViewController, let registration = sender as? Registration {
             destinationVC.registration = registration
         }
-        
-//        let destinationVC = segue.destination as? DetailsRegistrationViewController
-//        if let indexPath = tableView.indexPathForSelectedRow {
-//            let details = registrations[indexPath.row]
-//            
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateStyle = .short
-//            destinationVC?.firstName = details.firstName
-//            destinationVC?.lastName = details.lastName
-//            destinationVC?.email1 = details.emailAdress
-//            destinationVC?.checkInDate1 = dateFormatter.string(from: details.checkInDate)
-//            destinationVC?.checkOutDate1 = dateFormatter.string(from: details.checkOutDate)
-//            destinationVC?.numberOfAdults1 = String(details.numberOfAdults)
-//            destinationVC?.numberOfChildren1 = String(details.numberOfChildren)
-//            destinationVC?.wifi = String(details.wifi)
-//            destinationVC?.roomChoice1 = details.roomType.name
-//        }
+
     }
 
 }

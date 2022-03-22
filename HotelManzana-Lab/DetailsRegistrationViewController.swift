@@ -22,31 +22,8 @@ class DetailsRegistrationViewController: UIViewController {
     
     var registration: Registration!
     
-    
-//    var firstName = ""
-//    var lastName = ""
-//    var email1 = ""
-//    var checkInDate1 = ""
-//    var checkOutDate1 = ""
-//    var numberOfAdults1 = ""
-//    var numberOfChildren1 = ""
-//    var wifi = ""
-//    var roomChoice1 =  ""
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-//
-//        fullName.text = firstName + " " + lastName
-//        email.text = email1
-//        checkInDate.text = checkInDate1
-//        checkOutDate.text = checkOutDate1
-//        numberOfAdults.text = numberOfAdults1
-//        numberOfChildren.text = numberOfChildren1
-//        hasWifi.text = wifi
-//        chosenBed.text = roomChoice1
         
         
         fullName.text = registration.firstName + " " + registration.lastName

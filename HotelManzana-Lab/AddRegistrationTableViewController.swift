@@ -55,6 +55,8 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet weak var wifiYesNoLabel: UILabel!
     @IBOutlet weak var wifiTotalCostLabel: UILabel!
     @IBOutlet weak var totalCostLabel: UILabel!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     
     var wifiPrice = 0
     
@@ -78,6 +80,39 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
             checkOutDatePicker.isHidden = !isCheckOutDatePickerShown
         }
     }
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        emailTextField.delegate = self
+        
+        let midnightToday = Calendar.current.startOfDay(for: Date())
+        checkInDatePicker.minimumDate = midnightToday
+        checkInDatePicker.date = midnightToday
+        
+        updateDateViews()
+        updateNumberOfGuests()
+        updateRoomType()
+        disableDoneButton()
+        
+        numberOfNightsLabel.text = " "
+        shortNameRoomLabel.text = " "
+        totalCostLabel.text = " "
+        totalCostRoomLabel.text = " "
+    }
+    
+    func disableDoneButton() {
+        if self.registration == nil {
+            doneButton.isEnabled = false
+            tableView.reloadData()
+        } else {
+            doneButton.isEnabled = true
+            tableView.reloadData()
+        }
+    }
     
     func updateDateViews() {
         checkOutDatePicker.minimumDate = checkInDatePicker.date.addingTimeInterval(86400)
@@ -87,53 +122,37 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
         checkInDateLabel.text = dateFormater.string(from: checkInDatePicker.date)
         checkOutDateLabel.text = dateFormater.string(from: checkOutDatePicker.date)
+        
+        disableDoneButton()
     }
     
     func updateNumberOfGuests() {
         numberOfAdultsLabel.text = "\(Int(numberOfAdultsStepper.value))"
         numberOfChildrenLabel.text = "\(Int(numberOfChildrenStepper.value))"
+        disableDoneButton()
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    
-        let midnightToday = Calendar.current.startOfDay(for: Date())
-        checkInDatePicker.minimumDate = midnightToday
-        checkInDatePicker.date = midnightToday
-        
-        updateDateViews()
-        updateNumberOfGuests()
-        updateRoomType()
-        
-        numberOfNightsLabel.text = " "
-        shortNameRoomLabel.text = " "
-        totalCostLabel.text = " "
-        totalCostRoomLabel.text = " "
-        
-    }
-    
     
     func updateCharges () {
         if let diffInDays = Calendar.current.dateComponents([.day], from: checkInDatePicker.date, to: checkOutDatePicker.date).day {
             numberOfNightsLabel.text = "\(diffInDays)"
-
-        if let shortName = registration?.roomType.shortName {
-            shortNameRoomLabel.text = shortName
-            let totalRoomCost = roomType!.price * (diffInDays)
-            totalCostRoomLabel.text = String("$ \(totalRoomCost)")
-        } else {
-            shortNameRoomLabel.text = " "
-        }
-        
-        if wifiSwitch.isOn {
-            wifiYesNoLabel.text = "Yes"
-            wifiPrice = 10
-            wifiTotalCostLabel.text = String ("$ \(diffInDays * (wifiPrice))")
-        } else {
-            wifiYesNoLabel.text = "No"
-            wifiPrice = 0
-            wifiTotalCostLabel.text = "$ 0"
-        }
+            
+            if let shortName = registration?.roomType.shortName {
+                shortNameRoomLabel.text = shortName
+                let totalRoomCost = roomType!.price * (diffInDays)
+                totalCostRoomLabel.text = String("$ \(totalRoomCost)")
+            } else {
+                shortNameRoomLabel.text = " "
+            }
+            
+            if wifiSwitch.isOn {
+                wifiYesNoLabel.text = "Yes"
+                wifiPrice = 10
+                wifiTotalCostLabel.text = String ("$ \(diffInDays * (wifiPrice))")
+            } else {
+                wifiYesNoLabel.text = "No"
+                wifiPrice = 0
+                wifiTotalCostLabel.text = "$ 0"
+            }
             
             if roomTypeLabel.text == "Not Set" {
                 totalCostLabel.text = " "
@@ -141,68 +160,71 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
                 let totalCost = (roomType!.price * diffInDays) + (diffInDays + (wifiPrice))
                 totalCostLabel.text = String(totalCost)
             }
-        tableView.reloadData()
+            tableView.reloadData()
         }
-            
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
-        updateCharges() //call here
+        updateCharges()
+        disableDoneButton()
     }
-     
+    
     @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
-        updateCharges() //call here
+        updateCharges()
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         updateNumberOfGuests()
+        disableDoneButton()
     }
     
     @IBAction func cancelButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
     
-
     
-  /*   // ibaction to test all inputs b4 implementing the unwindSegue
-    @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
-        let firstName = firstNameTextField.text ?? ""
-        let lastName = lastNameTextField.text ?? ""
-        let email = emailTextField.text ?? ""
-        let checkInDate = checkInDatePicker.date
-        let checkOutDate = checkOutDatePicker.date
-        let numberOfAdults = Int(numberOfAdultsStepper.value)
-        let numberOfChildren = Int(numberOfChildrenStepper.value)
-        let hasWifi = wifiSwitch.isOn
-        let roomChoice = roomType?.name ?? "N/A"
-
-        print("DONE TAPPED")
-        print("firstName: \(firstName)")
-        print("lastName: \(lastName)")
-        print("email: \(email)")
-        print("checkIn: \(checkInDate)")
-        print("checkOut: \(checkOutDate)")
-        print("numberOfAdulsts: \(numberOfAdults)")
-        print("numberOfChildren: \(numberOfChildren)")
-        print("wifi: \(hasWifi)")
-        print("roomType: \(roomChoice)")
-    } */
     
-
+    
+    /*   // ibaction to test all inputs b4 implementing the unwindSegue
+     @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
+     let firstName = firstNameTextField.text ?? ""
+     let lastName = lastNameTextField.text ?? ""
+     let email = emailTextField.text ?? ""
+     let checkInDate = checkInDatePicker.date
+     let checkOutDate = checkOutDatePicker.date
+     let numberOfAdults = Int(numberOfAdultsStepper.value)
+     let numberOfChildren = Int(numberOfChildrenStepper.value)
+     let hasWifi = wifiSwitch.isOn
+     let roomChoice = roomType?.name ?? "N/A"
+     
+     print("DONE TAPPED")
+     print("firstName: \(firstName)")
+     print("lastName: \(lastName)")
+     print("email: \(email)")
+     print("checkIn: \(checkInDate)")
+     print("checkOut: \(checkOutDate)")
+     print("numberOfAdulsts: \(numberOfAdults)")
+     print("numberOfChildren: \(numberOfChildren)")
+     print("wifi: \(hasWifi)")
+     print("roomType: \(roomChoice)")
+     } */
+    
+    
     
     func updateRoomType() {
         if let roomType = roomType {
             roomTypeLabel.text = roomType.name
-            updateCharges() //call here
+            updateCharges()
+            disableDoneButton()
         } else {
             roomTypeLabel.text = "Not Set"
         }
     }
     
-
     
-
+    
+    
     //MARK: - Delegate Methods
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -263,5 +285,29 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
             destinationVC?.roomType = roomType
         }
     }
+    
+}
+ //MARK: - Change Focus on the textField
 
+extension AddRegistrationTableViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        firstNameTextField.endEditing(true)
+        lastNameTextField.endEditing(true)
+        emailTextField.endEditing(true)
+        
+        if textField == firstNameTextField {
+               textField.resignFirstResponder()
+               lastNameTextField.becomeFirstResponder()
+            } else if textField == lastNameTextField {
+               textField.resignFirstResponder()
+               emailTextField.becomeFirstResponder()
+            } else if textField == emailTextField {
+               textField.resignFirstResponder()
+            }
+        return true
+    }
+    
+    
 }
